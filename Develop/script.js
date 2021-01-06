@@ -14,13 +14,11 @@ function displayDate() {
 //this calls the displayDate function every 1000ms
 setInterval (displayDate, 1000);
 
-//this will run 'displayDate' when page is loaded
-displayDate();
 
 
 //currentTime Function
 function currentTime(){
-
+    
     //if timeValue is past 12PM, the number will be subtracted by 12
     if(timeValue >= 13){
         timeValue = timeValue - 12
@@ -29,12 +27,13 @@ function currentTime(){
 
     changeBackground();
 }
-
+//this will change the background color of tasks based on current time
 function changeBackground(){
-    //for(var i=0; i> )                              //would I need for loop here?
+    //for(var i=0; i> )                        //would I need for loop here?
+
     if (timeValue == scheduleHourNumber){
         $('.color').css("background-color", "lightred")
-        console.log('it matches');                   //this function is not working
+        console.log('it matches');               //this function is not working
     }
     /*else{
         $('.color').css("background-color", "lightgreen")
@@ -44,6 +43,7 @@ function changeBackground(){
 //this will run 'changeBackground every 1 minute
 setInterval (changeBackground, 60000);
 
+//this will create a new task
 createNewTask = function(){
     
     //this will create <input> in HTML
@@ -85,7 +85,7 @@ enterText = function(){
     
 }
 
-// save task  when text box is clicked off of
+// save task when text box is clicked off of
 $('newTask').on('blur', 'input',  function(){
     saveTask();
     console.log('saveTask')
@@ -93,9 +93,9 @@ $('newTask').on('blur', 'input',  function(){
 
 
 //loadTasks Function
-loadTasks = function(){                         //this function not working
+loadTasks = function(){                     //this function not working
     task = localStorage.getItem('userInput');
-    //input = 
+    
 }
 
 
@@ -109,17 +109,19 @@ loadTasks();
 $('newTask').click(enterText);
 
 //button click events
-$('#newBtn1').click(createNewTask);
+$('#clickHere').click(createNewTask);
 
 
 $('#deleteBtn1').click(deleteTask);
 
 $('#saveBtn1').click(saveTask);
 
+//this will run 'displayDate' when page is loaded
+displayDate();
 
 
    
- //set background color of future time slots to green
+//set background color of future time slots to green
  //set background color of current time slots to red
  
  
