@@ -1,51 +1,133 @@
 let newTask = document.querySelector('newTask');
 let hourNumber = document.querySelector('.number').innerHTML;
-let timeValue = moment().set('hour');
-let scheduleHourNumber = parseInt(hourNumber);
-console.log("schedule hour number is " , scheduleHourNumber);
+let timeValue = moment().format('HH');
+timeValue += "00"
+timeValue = parseInt(timeValue);
+timeValue = 1200 //remove later
+
+let dataDefault = [
+    //object literal
+    //array 0
+    {
+        time: 900,
+        text: ""
+
+    },
+    {
+        time: 1000,
+        text: ""
+
+    },
+    {
+        time: 1100,
+        text: ""
+
+    },
+    {
+        time: 1200,
+        text: ""
+
+    },
+    {
+        time: 1300,
+        text: ""
+
+    },
+    {
+        time: 1400,
+        text: ""
+
+    },
+    {
+        time: 1500,
+        text: ""
+
+    },
+
+    {
+        time: 1600,
+        text: ""
+
+    },
+    {
+        time: 1700,
+        text: ""
+
+    },
+]
+let data = loadData() || dataDefault
 
 
 //displayDate Function
 function displayDate() {
-    
+
     let currentDate = moment().format('MMMM Do YYYY, h:mm:ss A');
     document.querySelector(".date").innerHTML = currentDate;
-} 
+}
 //this calls the displayDate function every 1000ms
-setInterval (displayDate, 1000);
+setInterval(displayDate, 1000);
 
 
 
 //currentTime Function
-function currentTime(){
-    
-    //if timeValue is past 12PM, the number will be subtracted by 12
-    if(timeValue >= 13){
-        timeValue = timeValue - 12
-        console.log(timeValue);
-    };   
+function currentTime() {
 
-    changeBackground();
+    //if timeValue is past 12PM, the number will be subtracted by 12
+    /* if(timeValue >= 13){
+         timeValue = timeValue - 12
+         console.log(timeValue);
+     };  */
+
+    updateRows();
 }
 //this will change the background color of tasks based on current time
-function changeBackground(){
-    //for(var i=0; i> )                        //would I need for loop here?
 
-    if (timeValue == scheduleHourNumber){
-        $('.color').css("background-color", "lightred")
-        console.log('it matches');               //this function is not working
+function updateRows() {
+
+    let rows = document.querySelectorAll(".row")
+
+    for (var i = 0; i < rows.length; i++) {
+        let row = rows[i]
+        console.log(row.dataset.time)
+        let rowTime = parseInt(row.dataset.time)
+
+        if (timeValue > rowTime) {
+            $(row).find(".color").css("background-color", "green")
+            console.log('it matches');
+        } else if (timeValue == rowTime) {
+            $(row).find(".color").css("background-color", "red")
+        }
+        let text = data[i].text
+        $(row).find('textarea').val(text)
     }
+
+
     /*else{
         $('.color').css("background-color", "lightgreen")
        console.log("it doesnt match");
     }*/
 }
-//this will run 'changeBackground every 1 minute
-setInterval (changeBackground, 60000);
+
+function updateData() {
+    let rows = document.querySelectorAll(".row")
+
+    for (var i = 0; i < rows.length; i++) {
+        let row = rows[i]
+
+        let text = $(row).find('textarea').val()
+
+
+        data[i].text = text
+        
+    }
+
+}
+//this will run 'updateRows every 1 minute
+//setInterval(updateRows, 60000);
 
 //this will create a new task
-createNewTask = function(){
-    
+createNewTask = function () {
+
     //this will create <input> in HTML
     //var task = $('<input>')
     var task = document.createElement('input')   //this only works on 9:00AM
@@ -53,49 +135,49 @@ createNewTask = function(){
     newTask.append(task);
     console.log(task);
     //console.log('create');
-    
+
 }
 
 //deleteTask Function
-deleteTask = function(){
+deleteTask = function () {
     var removeTask = document.querySelector('input');
     removeTask.remove()
     console.log('delete');
-  
+
 }
 
 //saveTask Function
-saveTask = function(){
+function saveData() {
     //this is variable of value that retrieves the user 'input' from input box
-    var value = $('input').val();
-    
+    //var value = $('input').val();
+
     //this should set the value of 'var value' to local storage with 'userInput' label
-    localStorage.setItem('userInput', JSON.stringify(value))
-    
-    console.log(value);
-     
+    localStorage.setItem('data', JSON.stringify(data))
+
+
+
 }
 
 //enterText Function
-enterText = function(){
+enterText = function () {
     //var userInput = doucment.querySelector('newTask')
     //console.log(userInput);
     console.log("success");
     console.log(enterText);
-    
+
 }
 
 // save task when text box is clicked off of
-$('newTask').on('blur', 'input',  function(){
-    saveTask();
-    console.log('saveTask')
+$('textarea').on('blur', 'input', function () {
+    saveData();
+
 });
 
 
 //loadTasks Function
-loadTasks = function(){                     //this function not working
-    task = localStorage.getItem('userInput');
-    
+function loadData() {
+    rawJson = localStorage.getItem('data');
+    return JSON.parse(rawJson)
 }
 
 
@@ -103,7 +185,7 @@ loadTasks = function(){                     //this function not working
 currentTime();
 
 //this will load tasks from local storage
-loadTasks();
+//loadTasks();
 
 //this will run 'enterText' function when 'newTask' is clicked
 $('newTask').click(enterText);
@@ -111,18 +193,17 @@ $('newTask').click(enterText);
 //button click events
 $('#clickHere').click(createNewTask);
 
-
 $('#deleteBtn1').click(deleteTask);
 
-$('#saveBtn1').click(saveTask);
+$('#saveBtn1').click(saveData);
 
 //this will run 'displayDate' when page is loaded
 displayDate();
 
 
-   
+
 //set background color of future time slots to green
  //set background color of current time slots to red
- 
- 
+
+
 //load items into schedule from local storage if page is refreshed
