@@ -9,7 +9,7 @@ textarea{
   border: none;
   resize: none;
   color: #000000;
-  border-left: 1px solid black;
+  
   padding: 10px;
 }
 
@@ -77,4 +77,8 @@ textarea{
 textarea {
   justify-content: center;
 
+}
+
+.row {
+  margin-bottom: 25px;
 }

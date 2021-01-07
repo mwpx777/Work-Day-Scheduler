@@ -1,10 +1,13 @@
 // this will get the current hour from moment()
 let timeValue = moment().format('HH');
+
 // this will add 00 to end of timeValue
 timeValue += "00"
 // this will parse timeValue into a number
+
 timeValue = parseInt(timeValue);
 // this is the default saved info in local storage if none is saved
+
 let dataDefault = [
     //object literal
     //array 0
@@ -55,9 +58,9 @@ let dataDefault = [
 
     },
 ]
+
 //this will make 'data' either equal the loadData or dataDefault 
 let data = loadData() || dataDefault
-
 
 //displayDate Function for clock in header
 function displayDate() {
@@ -66,6 +69,7 @@ function displayDate() {
     // this displays currentDate on page in .date area
     document.querySelector(".date").innerHTML = currentDate;
 }
+
 //this calls the displayDate function every 1000ms
 setInterval(displayDate, 1000);
 
@@ -92,7 +96,7 @@ function updateRows() {
 }
 
 function updateData() {
-    console.log('clicked');
+    //console.log('clicked');
     let rows = document.querySelectorAll(".row")
 
     for (var i = 0; i < rows.length; i++) {
