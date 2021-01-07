@@ -92,6 +92,7 @@ function updateRows() {
 }
 
 function updateData() {
+    console.log('clicked');
     let rows = document.querySelectorAll(".row")
 
     for (var i = 0; i < rows.length; i++) {
@@ -101,6 +102,7 @@ function updateData() {
 
         data[i].text = text
     }
+    saveData();
 }
 
 //this will run updateData every 1 minute
@@ -123,7 +125,7 @@ function loadData() {
 }
 
 //button click events
-$('.saveBtn').click(saveData);
+$('.saveBtn').click(updateData);
 
 
 //this will run 'displayDate' when page is loaded
