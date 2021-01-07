@@ -70,6 +70,11 @@ textarea{
   transition: all .3s ease-in-out;
 }
 
-.centerCol {
+ .centerCol {
   background-color:#f1f1f1;
+} 
+
+textarea {
+  justify-content: center;
+
 }

@@ -1,10 +1,10 @@
-let newTask = document.querySelector('newTask');
-let hourNumber = document.querySelector('.number').innerHTML;
+// this will get the current hour from moment()
 let timeValue = moment().format('HH');
+// this will add 00 to end of timeValue
 timeValue += "00"
+// this will parse timeValue into a number
 timeValue = parseInt(timeValue);
-timeValue = 1200 //remove later
-
+// this is the default saved info in local storage if none is saved
 let dataDefault = [
     //object literal
     //array 0
@@ -55,57 +55,40 @@ let dataDefault = [
 
     },
 ]
+//this will make 'data' either equal the loadData or dataDefault 
 let data = loadData() || dataDefault
 
 
-//displayDate Function
+//displayDate Function for clock in header
 function displayDate() {
-
+    //this takes current date from moment()
     let currentDate = moment().format('MMMM Do YYYY, h:mm:ss A');
+    // this displays currentDate on page in .date area
     document.querySelector(".date").innerHTML = currentDate;
 }
 //this calls the displayDate function every 1000ms
 setInterval(displayDate, 1000);
 
 
-
-//currentTime Function
-function currentTime() {
-
-    //if timeValue is past 12PM, the number will be subtracted by 12
-    /* if(timeValue >= 13){
-         timeValue = timeValue - 12
-         console.log(timeValue);
-     };  */
-
-    updateRows();
-}
-//this will change the background color of tasks based on current time
-
 function updateRows() {
-
+    //this gives rows variable to all 'row' classes
     let rows = document.querySelectorAll(".row")
 
     for (var i = 0; i < rows.length; i++) {
         let row = rows[i]
-        console.log(row.dataset.time)
+        //console.log(row.dataset.time)
         let rowTime = parseInt(row.dataset.time)
 
-        if (timeValue > rowTime) {
-            $(row).find(".color").css("background-color", "green")
-            console.log('it matches');
+        if (timeValue < rowTime) {
+            $(row).find(".color").css("background-color", "#77dd77")
+            // console.log('it matches');
         } else if (timeValue == rowTime) {
-            $(row).find(".color").css("background-color", "red")
+            $(row).find(".color").css("background-color", "#ff6961")
         }
         let text = data[i].text
         $(row).find('textarea').val(text)
     }
 
-
-    /*else{
-        $('.color').css("background-color", "lightgreen")
-       console.log("it doesnt match");
-    }*/
 }
 
 function updateData() {
@@ -116,62 +99,21 @@ function updateData() {
 
         let text = $(row).find('textarea').val()
 
-
         data[i].text = text
-        
     }
-
-}
-//this will run 'updateRows every 1 minute
-//setInterval(updateRows, 60000);
-
-//this will create a new task
-createNewTask = function () {
-
-    //this will create <input> in HTML
-    //var task = $('<input>')
-    var task = document.createElement('input')   //this only works on 9:00AM
-    //.addClass('form-control')
-    newTask.append(task);
-    console.log(task);
-    //console.log('create');
-
 }
 
-//deleteTask Function
-deleteTask = function () {
-    var removeTask = document.querySelector('input');
-    removeTask.remove()
-    console.log('delete');
+//this will run updateData every 1 minute
+setInterval(updateData, 60000);
 
-}
 
-//saveTask Function
+
+//saveData Function
 function saveData() {
-    //this is variable of value that retrieves the user 'input' from input box
-    //var value = $('input').val();
-
-    //this should set the value of 'var value' to local storage with 'userInput' label
+    console.log('button clicked');
+    //this will set the value of data to local storage with 'data' label
     localStorage.setItem('data', JSON.stringify(data))
-
-
-
 }
-
-//enterText Function
-enterText = function () {
-    //var userInput = doucment.querySelector('newTask')
-    //console.log(userInput);
-    console.log("success");
-    console.log(enterText);
-
-}
-
-// save task when text box is clicked off of
-$('textarea').on('blur', 'input', function () {
-    saveData();
-
-});
 
 
 //loadTasks Function
@@ -180,30 +122,15 @@ function loadData() {
     return JSON.parse(rawJson)
 }
 
-
-//this runs the currentTime function when page loads
-currentTime();
-
-//this will load tasks from local storage
-//loadTasks();
-
-//this will run 'enterText' function when 'newTask' is clicked
-$('newTask').click(enterText);
-
 //button click events
-$('#clickHere').click(createNewTask);
+$('.saveBtn').click(saveData);
 
-$('#deleteBtn1').click(deleteTask);
-
-$('#saveBtn1').click(saveData);
 
 //this will run 'displayDate' when page is loaded
 displayDate();
 
+loadData();
+
+updateRows();
 
 
-//set background color of future time slots to green
- //set background color of current time slots to red
-
-
-//load items into schedule from local storage if page is refreshed
