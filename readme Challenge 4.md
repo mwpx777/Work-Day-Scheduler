@@ -17,7 +17,7 @@ Work Day Scheduler
 
 ## Description
 
-This is the fifth weekly challenge assignment.  In this challenge, we are tasked to create a work day scheduler that will store tasks into local storage for use between browser sections.
+This is the fifth weekly challenge assignment.  In this challenge, we are tasked to create a work day scheduler that will store tasks into local storage for use between browser sessions.
 
 
 ## Website Image
